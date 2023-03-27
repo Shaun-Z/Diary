@@ -1,2 +1,2 @@
-# ML-Diary
-My diary for machine learning.
+# Diary
+My diary for daily learning.
