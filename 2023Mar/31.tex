@@ -1,0 +1,14 @@
+\univlogo
+
+{\Huge March 31}\vspace{5mm}
+
+\section*{A sudden Idea}
+
+It occurred to me that maybe in the chapter $PLL$, the formula $\cfrac{\mathrm{d} \theta_d}{\mathrm{d} t}=\omega_i-\omega_o+\cfrac{\mathrm{d} [\theta_i(t)-\theta_o(t)]}{\mathrm{d} t}$ can be seen as an 'error function' to measure the differential of frequency. Just like the formula $E(\vec{w})\equiv\cfrac{1}{2}\sum_{d\in D}(t_d-o_d)^2$ in delta rule of training a perceptron. It is used to calculate the accumulated error value. For PLL, 'error' is the increasing phase difference.
+
+At the beginning, $\omega_o \ne \omega_i$, and $u_C$ varies with time, resulting in a random input voltage(from $-V_{m}$  to $+V_{m}$) towards VCO (looks like a 'stocastic approximation to gradient descent'). (With $\omega_o$ being updated, the expression $\cfrac{\mathrm{d} \theta_d}{\mathrm{d} t}$ is getting closer to a constant.) It happens that of the value $V_x$ reaches the condition that $U_{dm}\cdot V_x = \omega_i$, then the system successfully shifts from a unstable status to a status one (fix phase difference between $u_i$ and $u_o$). The we just need to adjust some parameters to make $\theta_o = \theta_i$.
+
+In addtion, a necessary condition that the system can become stable is that there exists a value $V_x\in [-V_m,+V_m]$ such that $U_{dm}\cdot V_x = \omega_i$, or it will remain unstable forever.
+
+
+
