@@ -41,3 +41,15 @@ Equation (4.10) corresponds to incremental gradient descent in which weights
 are updated after seeing each of the examples, while Equation (4.7) corresponds 
 to true gradient descent in which the weights are updated after seeing all the 
 examples once.
+
+\subsection*{4.7}
+
+Consider a two-layer feedforward ANN with two inputs $a$ and $b$, one hidden unit $c$, and one output unit $d$. This network has five weights ($w$, $w_{cb}$, $w_{eb}$, $w_{d}$, $w_{dc}$, $w_{dO}$), where $w_{xo}$ represents the threshold weight for unit $x$. Initialize these weights to the values (.1, .l, .l, .l, .1), then give their values after each of the first two training iterations of the BACKPROPAGATIaOlgNo rithm. Assume learning rate $\eta=.3$, momentum $\alpha=0.9$, incremental weight updates, and the following training examples:
+
+\begin{equation}
+\begin{matrix}
+    a&b&d\\
+    1&0&1\\
+    0&1&0   \nonumber
+\end{matrix}
+\end{equation}
