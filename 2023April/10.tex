@@ -1,0 +1,25 @@
+\univlogo
+
+{\Huge April 10}\vspace{5mm}
+
+\section*{After-class assignments}
+
+\subsection*{4.8}
+
+Revise the BACKPROPAGATION algorithm in Table 4.2 so that it operates on units using the squashing function $tanh$ in place of the sigmoid function. That is, assume the output of a single unit is $o=tanh(\vec{w}\cdot\vec{x})$. Give the weight update rule for output layer weights and hidden layer weights. Hint: $tanh'(x)=1-tanh^2(x)$
+
+Ansewr:
+
+For sigmoid function $\sigma$, $\sigma'=\sigma(1-\sigma)$, so the error $\delta_k=o_k(1-o_k)(t_k-o_k)$. As for $tanh$, $tanh'(x)=1-tanh^2(x)$.
+
+For each network output unit $k$, the error term
+\begin{equation}
+    \delta_k=(1-o^2(x))(t_k-o_k)    \nonumber
+\end{equation}
+
+For each hidden unit $h$m the error term 
+\begin{equation}
+    \delta_h=(1-o^2(x))\sum_{k\in outputs}w_{kh}\delta_k    \nonumber
+\end{equation}
+
+
