@@ -1,0 +1,46 @@
+\univlogo
+
+{\Huge April 22}\vspace{5mm}
+
+\section*{Configure Pytorch Environment}
+
+\subsection*{Intention}
+Since I have read about machine learning methods to categorize faces in Tom's textboot, I decide to try the C-language-method first and then use pytorch to repeate the same process. It is not easy to configure the cuda enviroment for pytorch so I want to write it down.
+
+\subsection*{Software and hardware}
+
+OS: Manjaro Linux
+
+CPU: 16 × 11th Gen Intel® Core™ i7-11800H @ 2.30GHz
+
+GPU: NVIDIA GeForce RTX 3060 Laptop GPU/PCIe/SSE2
+
+RAM: 31.1 GiB
+
+\subsection*{Install cuda}
+
+\begin{python}
+sudo pacman -Syu cuda cuda-tools
+export CUDA_PATH=/opt/cuda
+sudo pacman -Syu python-pytorch-opt-cuda
+\end{python}
+
+\subsection*{Test cuda}
+
+Enter python enviroment and excute the following commands:
+
+\begin{python}
+import torch
+torch.cuda.is_available()
+\end{python}
+
+If you get the result:
+
+\begin{python}
+true
+\end{python}
+
+then you have configure the pytorch enviroment properly.
+
+
+
