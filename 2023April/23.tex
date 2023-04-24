@@ -50,7 +50,31 @@ Lower values for both parameters produced roughly equivalent generalization accu
 
 Full gradient descent was used.
 
-network weights in the output units were initialized to small random
+Network weights in the output units were initialized to small random values. However, input unit weights were initialized to 0 to yield much more intelligible visualizations of learned weights, without any noticeable impact on generalization accuracy.
+
+The number of training iterations was selected by partitioning the available data into a \textbf{training set} and a separate \textbf{validation set}.
+
+\textbf{Gradient descent} was used to minimize the error over the training set.
+
+The performance of the network was evaluated over the validation set after \textbf{every 50 gradient descent steps}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./2023April/faceRecog.png}
+    \caption{Process of training}
+    \label{faceRecognition}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{./2023April/faceRecogLayer.png}
+    \caption{Layers}
+    \label{faceRecognitionLayers}
+\end{figure}
+
+As is shown above, the four squares within each rectangle indicate the four weights associated with this output unit--the weight $w_0$, which determines the unit \textbf{threshhold}(on the left), followed by the three weights connecting the three hidden units to this output.
+
+The \textbf{brightness} of the square indicates the weight value, with \textbf{bright white} indicating a large positive weight, \textbf{dark black} indicating a large negative weight, and intermediate shades of \textbf{grey} indicating intermediate weight values.
 
 
 
