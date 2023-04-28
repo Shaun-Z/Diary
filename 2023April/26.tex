@@ -1,0 +1,187 @@
+\univlogo
+
+{\Huge April 26}\vspace{5mm}
+
+\section*{ImageNet Large Scale Visual Recognition Challenge (ILSVRC)}
+
+The input image will first be preprocessed into an instance of the multidimensional array class \textsl{torch.Tensor}. It is an RGB image with height and width, so this tensor will have \textbf{three dimensions}: the three color channels, and two spatial image dimensions of a specific size. 
+
+\subsection*{Obtaining a pretrained network for image recognition}
+
+Two networks:
+
+\textbf{AlexNet}, one of
+the early breakthrough networks for image recognition;
+
+Residual network, \textbf{ResNet} for short, which won the ImageNet classification, detection, and localization competitions, among others, in 2015.
+
+\begin{python}
+from torchvision import models
+
+dir(models)
+\end{python}
+
+output:
+
+\begin{python}
+['AlexNet',
+'DenseNet',
+'Inception3',
+'ResNet',
+'SqueezeNet',
+'VGG',
+...
+'alexnet',
+'densenet',
+'densenet121',
+...
+'resnet',
+'resnet101',
+'resnet152',
+...
+]
+\end{python}
+
+The \textbf{capitalized names} refer to Python classes that implement a number of popular models. They differ in their architecture—that is, in the arrangement of the operations occurring between the input and the output.
+
+The \textbf{lowercase names} are convenience functions that return models instantiated from those classes, sometimes with different parameter sets.
+
+\subsection*{AlexNet}
+
+In order to run the AlexNet architecture on an input image, we can create an instance of the \textsl{AlexNet} class:
+
+\begin{python}
+alexnet = models.Alexnet()
+\end{python}
+
+The network is uninitialized: its weights, the numbers by which inputs are added and multiplied, have not been trained on anything—the network itself is a blank (or rather, random) slate. We’d need to either train it from scratch or load weights from prior training, 
+
+The uppercase names correspond to classes that implement popular architectures for computer vision. The lowercase names, on the other hand, are functions that instantiate models with predefined numbers of layers and units and optionally download and load pre-
+trained weights into them. Note that there’s nothing essential about using one of these functions: they just make it convenient to instantiate the model with a number of layers and units that matches how the pretrained networks were built.
+
+\subsection*{ResNet}
+
+Using the \textsl{resnet101} function, we’ll instantiate a 101-layer convolutional neural network.
+
+\begin{python}
+resnet = models.resnet101(pretrained=True)
+resnet
+\end{python}
+
+Output:
+
+\begin{python}
+ResNet(
+    (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3),
+                    bias=False)
+    (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True,
+                        track_running_stats=True)
+    (relu): ReLU(inplace)
+    (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1,
+                        ceil_mode=False)
+    (layer1): Sequential(
+        (0): Bottleneck(
+    ...
+        )
+    )
+    (avgpool): AvgPool2d(kernel_size=7, stride=1, padding=0)
+    (fc): Linear(in_features=2048, out_features=1000, bias=True)
+)
+\end{python}
+
+What we are seeing here is \textsl{modules}, one per line.
+
+Preprocess the input images so they are right size and so that their values (colors) sit roughly in the same numerical range. In order to do that, the \textsl{torchvision} module provides \textsl{transfroms}, which allows us to quickly define pipelines of basic preprocessing functions:
+
+\begin{python}
+from torchvision import transforms
+preprocess = transforms.Compose([
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize(
+            mean=[0.485, 0.456, 0.406],
+            std=[0.229, 0.224, 0.225]
+        )])
+\end{python}
+
+In this case, we defined a \textsl{preprocess} function that will scale the input image to $256 \times 256$, crop the image to $224 \times 224$ around the center, transform it to a tewnsor, and normalize its \textbf{RGB}
+
+The \textsl{resnet} variable can be called like a \textbf{function}, taking as input one or more images and producing an equal number of scores for each of the 1000 ImageNet classes.
+
+Now we can grab a picture:
+
+\begin{python}
+from PIL import Image
+img = Image.open("../data/p1ch2/bobby.jpg")
+\end{python}
+
+Next, pass the image through the preprocessing pipeline:
+
+\begin{python}
+img_t = preprocess(img)
+\end{python}
+
+Then we can \textbf{reshape}, \textbf{crop}, and \textbf{normalize} the tensor in a way that the network expects.
+
+\begin{python}
+import torch
+batch_t = torch.unsqueeze(img_t, 0)
+\end{python}
+
+Now we are ready to run our model.
+
+\subsection*{Run the model}
+
+The process of running a trained model on new data is called \textsl{inference} in deep learning circles. In order to do inference, we need to put the network in \textsl{evaluation} mode:
+
+\begin{python}
+resnet.eval()
+\end{python}
+
+If not, some pretrained models, likje \textsl{batch normalization} and \textsl{dropout},  will not produce meaningful answers, just because of the way they work internally.
+
+Now the \textsl{eval} has been set, we are ready for inference:
+
+\begin{python}
+out = resnet(batch_t)
+out
+\end{python}
+
+A staggering set of operations involving 44.5 million parameters has just happened, producing a vector of 1000 scores, one per InageNet class. That didn't take long.
+
+The next step is to find the label of the class that received the highest score.
+
+To see the list of predicted labels, we will load a text file listing the labels in the same order they were presented to the network during training, and then we will pick out the label at the index that produced the highest score from the network.
+
+Load The file containintg the 1000 labels for the ImageNet dataset classes:
+
+\begin{python}
+with open('../data/p1ch2/imagenet_classes.txt') as f:
+    labels = [line.strip() for line in f.readlines()]
+\end{python}
+
+Now we need to determine the index corresponding to the maximum score in the \textsl{out} tensor we obtained previously.
+
+\begin{python}
+_, index = torch.max(out, 1)
+\end{python}
+
+Now use the \textsl{index} to access the label. (Here \textsl{index} is not a plain Python number, but a one-element, one-dimensional tensor). We need to get the \textbf{actual numberical value} to use as an index into our \textsl{labels} list using \textsl{index[0]}. We also use \textsl{torch.nn.functional.software} to normalize our outputs to the range [0, 1], and divide by the sum.
+
+\begin{python}
+percentage = torch.nn.functional.softmax(out, dim=1)[0] * 100
+labels[index[0]], percentage[index[0]].item()
+\end{python}
+
+Since the model produced scores, we can also find out what the second best, third best, and so on were(Use the \textsl{sort} function):
+
+\begin{python}
+_, indices = torch.sort(out, descending=True)
+[(labels[idx], percentage[idx].item()) for idx in indices[0][:5]]
+\end{python}
+
+
+
+
+
