@@ -1,0 +1,276 @@
+\univlogo
+
+{\Huge April 29}\vspace{5mm}
+
+\hypertarget{evaluating-hypotheses}{%
+\section{Evaluating Hypotheses}\label{evaluating-hypotheses}}
+
+\begin{itemize}
+\item
+  Given the \textbf{observed accuracy} of a hypothesis over a over a
+  limited sample of data, how well does this estimate its accuracy over
+  \textbf{additional examples}?
+\item
+  Given that one hypothesis outperforms another over some sample of
+  data, how probable is it that this hypothesis is more accurate in
+  general?
+\item
+  When data is limited what is the best way to use this data to both
+  learn a hypothesis and estimate its accuracy?
+\end{itemize}
+
+\hypertarget{motivation}{%
+\subsection{Motivation}\label{motivation}}
+
+When data is plentiful, estimating the accuracy of a hypothesis is
+relatively straightforward. However, when we must learn a hypothesis and
+estimate its future accuracy given only a limited set of data, two
+difficulties:
+
+\begin{itemize}
+\item
+  \(\mathbf{Bias}\) in the estimate.
+
+  The observed accuracy of the learned hypothesis over the training
+  examples is often a poor estimator of its accuracy over future
+  examples.
+
+  To obtain an unbiased estimate of future accuracy, we typically test
+  the hypothesis on some set of test examples chosen
+  \emph{\textbf{independently} of the training examples and the
+  hypothesis}.
+\item
+  \(\mathbf{Variance}\) in the estimate.
+
+  Even if the hypothesis accuracy is measured over an unbiased set of
+  test examples independent of the training examples, the measured
+  accuracy can still vary from the true accuracy, depending on the
+  makeup of the particular set of test examples. \emph{The smaller the
+  set of test examples, the greater the expected variance.}
+\end{itemize}
+
+\hypertarget{estimating-hypothesis-accuracy}{%
+\subsection{Estimating hypothesis
+accuracy}\label{estimating-hypothesis-accuracy}}
+
+Consider learning the target function "People who plan to purchase new
+skis this year," given a sample of training data collected by surveying
+people as they arrive at a ski resort.
+
+\begin{itemize}
+\item
+  Instance space \(X\): space of all people who might be described by
+  attributes such as their \textbf{age}, \textbf{occupation},
+  \textbf{how many times they skied} last year, etc.
+\item
+  Distribution \(\boldsymbol{D}\) : Specifying for each person \(x\) the
+  probability that \(x\) will be encountered as the next person arriving
+  at the ski resort.
+\item
+  Target function \(f:X\rightarrow\{0,1\}\) : classifying each person
+  according to whether or not they plan to purchase skis this year.
+\end{itemize}
+
+\hypertarget{sample-error-and-true-error}{%
+\subsubsection{Sample error and true
+error}\label{sample-error-and-true-error}}
+
+Two notions of \textbf{accuracy} (or two \textbf{error}):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Error rate of the hypothesis \textbf{over the sample} of data that is
+  available.
+\item
+  Error rate of the hypothesis \textbf{over the entire unknown
+  distribution} \(\boldsymbol{D}\) of examples.
+\end{enumerate}
+
+\begin{itemize}
+\item
+  \(\textbf{Definition}\): The \textbf{sample error} of hypothesis \(h\)
+  with respect to target function \(f\) and data sample \(S\) is
+\end{itemize}
+
+\[error_S(h)\equiv\cfrac{1}{n}\sum_{x\in S}\delta(f(x),h(x))\]
+
+\begin{quote}
+\(n\): number of examples in \(S\)
+
+\(\delta(f(x),h(x))=\left\{\begin{matrix}
+1 &  f(x)\neq h(x)\\
+0 &  ohterwise\\
+\end{matrix}\right.\)
+\end{quote}
+
+\begin{itemize}
+\item
+  \(\textbf{Definition}\): The true error of hypothesis \(h\) with
+  respect to target function \(f\) and distribution \(\boldsymbol{D}\),
+  is the probability that \(h\) will misclassify an instance drawn at
+  random according to \(\boldsymbol{D}\):
+\end{itemize}
+
+\[error_{\boldsymbol{D}}(h)\equiv\underset{x\in \boldsymbol{D}}{\mathbf{Pr}}[f(x)\neq h(x)]\]
+
+\hypertarget{confidence-intervals-for-discrete-valued-hypotheses}{%
+\subsubsection{Confidence Intervals for Discrete-Valued
+hypotheses}\label{confidence-intervals-for-discrete-valued-hypotheses}}
+
+Estimate the true error for some discrete-valued hypothesis \(h\), based
+on its observed sample error over a sample \(S\), where:
+
+\begin{itemize}
+\item
+  the sample \(S\) contains \(n\) examples drawn independent of one
+  another, and independent of \(h\), according to the probability
+  distribution \(\boldsymbol{D}\).
+\item
+  \(n\ge 30\)
+\item
+  hypothesis \(h\) commits \(r\) errors over these \(n\) examples ( i.e.
+  \(error_S(h)=\cfrac{r}{n}\))
+\end{itemize}
+
+Now statistical theory allows us to make the following assertions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Given no other information, the most probable value of
+  \(error_{\boldsymbol{D}}(h)\) is \(error_S(h)\).
+\item
+  With approximately 95\% probability, the true error
+  \(error_{\boldsymbol{D}(h)}\) lies in the interval
+\end{enumerate}
+
+\[error_S(h)\pm1.96\sqrt{\cfrac{error_S(h)(1-error_S(h))}{n}}\]
+
+\begin{quote}
+The constant 1.96 is used in case we desire a 95\% confidence interval.
+\end{quote}
+
+The general expression for approximate \(N\)\% confidence intervals for
+\(error_{\boldsymbol{D}}(h)\) is
+
+\[error_S(h)\pm z_N\sqrt{\cfrac{error_S(h)(1-error_S(h))}{n}}\]
+
+where the constant \(z_N\) is chosen depending on the desired confidence
+level, using the values of \(z_N\) given in Table:
+
+\begin{longtable}[]{@{}llllllll@{}}
+\toprule\noalign{}
+Confidence level \(N\)\% & 50\% & 68\% & 80\% & 90\% & 95\% & 98\% &
+99\% \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Constant \(z_N\) & 0.67 & 1.00 & 1.28 & 1.64 & 1.96 & 2.33 & 2.58 \\
+\end{longtable}
+
+\begin{quote}
+The expression provides only an approximate confidence interval, though
+the approximation is quite good when the sample contains at least 30
+samples, and \(error_S(h)\) is not too close to 0 or 1. A more accurate
+rule of thumb is that the above approximation works well when:
+
+\[n\cdot error_S(h)(1-error_S(h))\ge5\]
+\end{quote}
+
+\hypertarget{basics-of-sampling-theory}{%
+\subsection{Basics of sampling theory}\label{basics-of-sampling-theory}}
+
+\hypertarget{error-estimation-and-estimating-binomial-proportions}{%
+\subsubsection{Error estimation and estimating binomial
+proportions}\label{error-estimation-and-estimating-binomial-proportions}}
+
+\[E[X]=np\\
+Var(X)=np(1-p)\\
+\sigma_X=\sqrt{np(1-p)}\]
+
+Most statisticians recommend using the Normal approximation only when
+\(np(1-p)\ge5\)
+
+\hypertarget{the-binomial-distribution}{%
+\subsubsection{The binomial
+distribution}\label{the-binomial-distribution}}
+
+\[Pr(R=r)=\cfrac{n!}{r!(n-r)!}p^r(1-p)^{n-r}\]
+
+\hypertarget{mean-and-variance}{%
+\subsubsection{Mean and Variance}\label{mean-and-variance}}
+
+\begin{itemize}
+\item
+  \(\textbf{Definition}\): Consider a random variable \(Y\) that takes
+  on the possible values \(y_1, ..., y_n\).
+
+  The \textbf{expected value} of \(Y\), \(E[Y]\) is
+
+  \[E[Y]\equiv\sum^n_{i=1}y_iPr(Y=y_i)\]
+
+  \begin{quote}
+  In case the random variable \(Y\) is governed by a Binomial
+  distribution, it can be shown that
+
+  \[E[Y]=np\]
+  \end{quote}
+\item
+  \(\textbf{Definition}\): The \textbf{variance} of a random variable
+  \(Y\), \(Var[Y]\), is
+
+  \[Var[Y]\equiv E[(Y-E[Y])^2]\]
+\end{itemize}
+
+\begin{itemize}
+\item
+  \(\textbf{Definition}\): The \textbf{standard deviation} of a random
+  variable \(Y\), \(\sigma_Y\), is
+
+  \[\sigma_Y\equiv\sqrt{E[(Y-E[Y])^2]}\]
+
+  \begin{quote}
+  In case the random variable \(Y\) is governed by a Binomial
+  distribution, it can be shown that
+
+  \[Var[Y]=np(1-p)\\
+  \sigma_Y=\sqrt{np(1-p)}\]
+  \end{quote}
+\end{itemize}
+
+\hypertarget{estimators-bias-and-variance}{%
+\subsubsection{Estimators, Bias, and
+Variance}\label{estimators-bias-and-variance}}
+
+What is the likely difference between \(error_S(h)\) and the true error
+\(error_{\boldsymbol{D}}(h)\)?
+
+\begin{quote}
+In terms of Binomial distribution, we have:
+
+\[error_S(h)=\cfrac{r}{n}\\
+error_{\boldsymbol{D}}(h)=p\]
+
+where \(n\) is the number of instances in the sample \(S\), \(r\) is the
+number of instances from \(S\) misclassified by \(h\), and \(p\) is the
+probability of misclassifying a single instance drawn from
+\(\boldsymbol{D}\).
+\end{quote}
+
+\underline{Statisticians call \(error_S(h)\) an \textbf{estimator} for the true error \(error_{\boldsymbol{D}}(h)\).}
+
+\begin{itemize}
+\item
+  \(\textbf{Definition}\): The \textbf{estimation bias} of an estimator
+  \(Y\) for an arbitrary parameter \(p\) is:
+
+  \[E[Y]-p\]
+
+  \begin{quote}
+  If the estimation bias is zero, we say that \(Y\) is an \emph{unbiased
+  estimator} for \(p\).
+  \end{quote}
+\end{itemize}
+
