@@ -1,0 +1,224 @@
+\univlogo
+
+{\Huge April 30}\vspace{5mm}
+
+\hypertarget{confidence-intervals}{%
+\subsubsection{Confidence Intervals}\label{confidence-intervals}}
+
+\begin{itemize}
+\item
+  \(\textbf{Definition}\): An \(N\)\% \textbf{confidence interval} for
+  some parameter \(p\) is an interval that is expected with probability
+  \(N\)\% to contain \(p\).
+\end{itemize}
+
+How to derive confidence intervals for \(error_{\boldsymbol{D}}(h)\)?
+
+\begin{quote}
+Find the interval centered around the mean value
+\(error_{\boldsymbol{D}}(h)\), which is wide enough to contain 95\% of
+the total probability under this distribution.
+\end{quote}
+
+For the Binomial distribution calculating the confidence intervals is tedious, but for sufficiently large sizes the Binomial dirstribution
+can be closely approximated by the Normal distribution. For large
+\(n\), any Binomial distribution is very closely approximated by a
+Normal distribution with the same mean and variance.
+
+Precisely speaking , \(z_N\) gives half the width of the interval
+measured in standard deviations. If \(Y\sim N(\mu,\sigma^2)\), the
+measured random value \(y\) of \(Y\) will fall into the following
+interval \(N\)\% of the time:
+
+\[\mu\pm z_N\sigma\]
+
+Equivalently, the mean \(\mu\) will fall into the following interval
+\(N\)\% of the time :
+
+\[y\pm z_N\sigma\]
+
+The common rule of thumb in statistics is that these two approximations
+are very goog as long as \(n\ge30\) or when \(np(1-p)\ge5\). \emph{For
+smaller values of \(n\) it is wise to use a table giving values for the
+Binomial distribution.}
+
+\hypertarget{two-sided-and-one-sided-bounds}{%
+\subsubsection{Two-Sided and One-Sided
+Bounds}\label{two-sided-and-one-sided-bounds}}
+
+Considering the fact that the Normal distribution is symmetrical about
+its mean, any two-sided confidence interval based on a Normal
+distribution can be converted to a corresponding one-sided interval with
+twice the confidence.
+
+\begin{quote}
+A \(100(1-\alpha)\%\) confidence interval with lower bound \(L\) and
+upper bound \(U\) implies a \(100(1-\cfrac{\alpha}{2})\%\) confidence
+interval with lower bound \(L\) and no upper bound. It also implies a
+\(100(1-\cfrac{\alpha}{2})\%\) confidence interval with upper bound
+\(U\) and no lower bound.
+
+Here \(\alpha\) corresponds to the probability that the correct value
+lies outside the stated interval.
+\end{quote}
+
+\hypertarget{a-general-approach-for-deriving-confidence-intervals}{%
+\subsection{A General Approach for Deriving Confidence
+Intervals}\label{a-general-approach-for-deriving-confidence-intervals}}
+
+\emph{Central Limit Theorem}
+
+\hypertarget{central-limit-theorem-1}{%
+\subsubsection{Central Limit Theorem}\label{central-limit-theorem-1}}
+
+Obseved value of \(n\) independently drawn random variables
+\(Y_1,...,Y_n\) that obey the same unknown underlying probability
+distribution. Let \(\mu\) denote the mean of the unknown distribution
+governing each of the \(Y_i\) and let \(\sigma\) denote the standard
+deviation.
+
+\begin{quote}
+\(Y_i\) \emph{are independet, identically distributed} random variables
+(because they describe independent experiments, each obeying the same
+underlying probability distribution.)
+\end{quote}
+
+Caltulate the sample mean \(\bar{Y_n}\equiv\cfrac{1}{n}\sum^n_{i=1}Y_i\)
+.
+
+The Central Limit Theorem states that
+
+\begin{itemize}
+\item
+  As \(n\rightarrow \infty\),
+  \(\bar{Y_n}\sim N(\mu,\frac{\sigma^2}{n})\), \emph{regardless of the
+  distribution that governs the underlying random variables \(Y_i\)}.
+
+  \hypertarget{central-limit-theorem-2}{%
+  \section{Central Limit Theorem}\label{central-limit-theorem-2}}
+
+  Consider a set of independent, identically distributed random
+  variables \(Y_1,...,Y_n\) governed by an arbitrary probability
+  distribution with mean \(\mu\) and finite variance \(\sigma^2\).
+  Define the sample mean, \(\bar{Y_n}\equiv\cfrac{1}{n}\sum^n_{i=1}Y_i\)
+  .
+
+  Then as \(n\rightarrow \infty\), the distribution governing
+
+  \[\cfrac{\bar{Y_n}-\mu}{\cfrac{\sigma}{\sqrt{n}}}\sim N(0,1)\]
+\end{itemize}
+
+\begin{quote}
+The Central Limit Theorem is a very useful fact, because it implies that
+whenever we define an estimator that is the mean of some sample, the
+distribution governing this estimator can be approximated by a Normal
+distribution for sufficiently larg \(n\).
+
+If we also know the variance for this Normal distribtution, then we can
+use equation \(y\pm z_N\sigma\) to compute confidence intervals.
+
+A common rule of thumb is that we can use the Normal approximation when
+\(n\ge30\) .
+\end{quote}
+
+\hypertarget{difference-in-error-of-two-hypotheses}{%
+\subsection{Difference in error of two
+hypotheses}\label{difference-in-error-of-two-hypotheses}}
+
+Hypotheses \(h_1\) tested on sample \(S_1\) containing \(n_1\) randomly
+drawn examples.
+
+Hypotheses \(h_2\) tested on sample \(S_2\) containing \(n_2\) randomly
+drawn examples.
+
+Estimated difference between the \textbf{true} errors of these two
+hypotheses:
+
+\[d\equiv error_{\boldsymbol{D}}(h_1)-error_{\boldsymbol{D}}(h_2)\]
+
+An estimator is the difference between the sample errors, which denoted
+by \(\hat{d}\)
+
+\[\hat{d}\equiv error_{\boldsymbol{S_1}}(h_1)-error_{\boldsymbol{S_2}}(h_2)\]
+
+\begin{quote}
+It can be shown that \(\hat{d}\) gives an unbiased estimate of \(d\),
+that is, \(E[\hat{d}]=d\)
+\end{quote}
+
+Both \(error_{S_1}(h_1)\) and \(error_{S_2}(h_2)\) follow distributions
+that are approximately Normal.
+
+\(\hat{d}\) will also follow a distribution that is approximately
+Normal, with mean \(d\) and we have:
+
+\[\sigma^2_{\hat{d}}\approx\cfrac{error_{S_1}(h_1)(1-error_{S_1}(h_1))}{n_1}+\cfrac{error_{S_2}(h_2)(1-error_{S_2}(h_2))}{n_2}\]
+
+For a random variable \(\hat{d}\) obeying a Normal distribution with
+mean \(d\) and variance \(\sigma^2\), the \(N\%\) confidence interval
+estimate for \(d\) is \(\hat{d}\pm z_N\sigma\) :
+
+\[\hat{d}\pm z_N\sqrt{\cfrac{error_{S_1}(h_1)(1-error_{S_1}(h_1))}{n_1}+\cfrac{error_{S_2}(h_2)(1-error_{S_2}(h_2))}{n_2}}\]
+
+\begin{quote}
+Although the above analysis considers the case in wich \(h_1\) and
+\(h_2\) are tested on independent data samples, it is often accaptable
+to use the confidence interval in the setting where \(h_1\) and \(h_2\)
+are tested on a single sample \(S\):
+
+\[\hat{d}\equiv error_S(h_1)-error_S(h_2)\]
+
+"The variance in this new \(\hat{d}\) will \emph{\textbf{\ul{usually}}}
+be smaller than the variance given \(\sigma^2_{\hat{d}}\) , when we set
+\(S_1\) and \(S_2\) to \(S\). This is because using a single sample
+\(S\) eliminates the variance due to random differences in the
+compositions of \(S_1\) and \(S_2\)."
+
+\begin{quote}
+The premise that we can do this is that \(Y_1\) and \(Y_2\) are
+independent of each other. However, there might exists functions \(f_1\)
+and \(f_2\), under which \(f_1(S_1)\sim f_2(S_2)\).
+\end{quote}
+\end{quote}
+
+\hypertarget{comparing-learning-algorithms}{%
+\subsection{Comparing Learning
+Algorithms}\label{comparing-learning-algorithms}}
+
+Two algoriths: \(L_A\) and \(L_B\)
+
+We wish to estimate the expected value of the difference in their
+errors:
+
+\[\underset{S \subset \boldsymbol{D}}{E}[error_{\boldsymbol{D}}(L_A(S))-error_{\boldsymbol{D}}(L_B(S))]\]
+
+In practive we have only a limited sample \(\boldsymbol{D}_0\) of data
+when comparing learning methods. We need to divide \(\boldsymbol{D}_0\)
+into a \textbf{training set} \(S_0\) and a disjoint \textbf{test set}
+\(T_0\) . We measure the quantity:
+
+\[error_{\boldsymbol{T_0}}(L_A(S_0))-error_{\boldsymbol{T_0}}(L_B(S_0))\]
+
+\begin{longtable}[]{@{}l@{}}
+\toprule\noalign{}
+1. Partition the available data \(\boldsymbol{D}_0\) into \(k\) disjoint
+subsets \(T_1,T_2,...,T_k\) of equal size, where this size is at least
+30. \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\vtop{\hbox{\strut 2. For \(i\) from 1 to \(k\), do}\hbox{\strut use
+\(T_i\) for the test set, and the remaining data for training set
+\(S_i\)}\hbox{\strut  -
+\(S_i\leftarrow\{\boldsymbol{D}_0-T_i\}\)}\hbox{\strut  -
+\(h_A\leftarrow L_A(S_i)\) }\hbox{\strut  - \(h_B\leftarrow L_B(S_i)\)
+}\hbox{\strut  -
+\(\delta_i \leftarrow error_{T_i}(h_A)-error_{T_i}(h_B)\) }} \\
+\vtop{\hbox{\strut 3. Return the value \(\bar{\delta}\),
+where}\hbox{\strut \(\bar{\delta}=\cfrac{1}{k}\sum^k_{i=1}\delta_i\)}} \\
+\end{longtable}
+
+\hypertarget{paired-uxatuxa-tests}{%
+\subsubsection{\texorpdfstring{Paired \(t\)
+Tests}{Paired t Tests}}\label{paired-uxatuxa-tests}}
