@@ -53,7 +53,7 @@ the \emph{most probable} hypothesis, given the data \(D\) plus any
 initial knowledge about the prior probabilities of the various
 hypotheses in space \(H\).
 
-Bayes theorem provides a way to \underline{calculate the probability of a
+Bayes theorem provides a way to \ul{calculate the probability of a
 hypothesis based on its prior probability}, the probabilities of
 observing various data given the hypothesis, and the observed data
 itself.
@@ -203,7 +203,7 @@ Assumptions:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  The training data \(D\) is \underline{noise free}.
+  The training data \(D\) is \ul{noise free}.
 \item
   The target concept \(c\) is contained in the hypothesis space \(H\).
 \item
@@ -275,8 +275,8 @@ equally among the remaining consistent hypotheses.
 Learners}\label{map-hypotheses-and-consistent-learners}}
 
 Every consistent learner outputs a MAP hypothesis, if we assume a
-\underline{uniform} prior probability distribution over \(H\), and if we assume
-\underline{deterministic}, \underline{noise-free} training data.
+\ul{uniform} prior probability distribution over \(H\), and if we assume
+\ul{deterministic}, \ul{noise-free} training data.
 
 The Bayesian framework allows one way to characterize the behavior of
 learning algorithms, even when the learning algorithm does not
@@ -412,7 +412,7 @@ h(x_i) & \text{if }d_i=1\\
 \end{aligned}
 \end{equation*}
 
-So the expression for the \underline{maximum likelihood hypothesis} is:
+So the expression for the \ul{maximum likelihood hypothesis} is:
 
 \[h_{ML}=\underset{h\in H}{argmax}\prod_{i=1}^mh(x_i)^{d_i}(1-h(x_i))^{1-d_i}P(x_i)\]
 
@@ -500,7 +500,7 @@ and if we choose \(C_2\) to be the optimal encoding \(C_{D|h}\), then
 \end{itemize}
 
 The most probable classification of the new instance is obtained by
-combining the predictions of all hypotheses, \underline{weighted by their
+combining the predictions of all hypotheses, \ul{weighted by their
 posterior probabilities}.
 
 \[P(v_j|D)=\sum_{h_i\in H}P(v_j|h_i)P(h_i|D)\]
@@ -545,8 +545,8 @@ It can be quite \textbf{costly} to apply Bayes optimal classifier. An
 
 \begin{itemize}
 \item
-  Choose a hypothesis \(h\) from \(H\) \underline{at random}, according to the
-  \underline{posterior probability} distribution over \(H\)
+  Choose a hypothesis \(h\) from \(H\) \ul{at random}, according to the
+  \ul{posterior probability} distribution over \(H\)
 \item
   Use \(h\) to predict the classification of the next instance \(x\).
 \end{itemize}
@@ -557,10 +557,7 @@ Bayes optimal classifier.
 
 It implies that if the learner assumes a uniform prior over \(H\), and
 if target concepts are in fact drawn from such a distribution when
-presented to the learner, \underline{then classifying the next instance
-according to a hypothesis drawn at random from the current version space
-(according to a uniform distribution), will have expected error
-\textbf{at most twice} that of the Bayes optimal classifier}.
+presented to the learner, \ul{then classifying the next instance according to a hypothesis drawn at random from the current version space (according to a uniform distribution), will have expected error \textbf{at most twice} that of the Bayes optimal classifier}.
 
 \hypertarget{naive-bayes-classifier}{%
 \subsection{Naive Bayes Classifier}\label{naive-bayes-classifier}}
@@ -582,13 +579,10 @@ v_{MAP}&=\underset{v_j\in V}{\text{argmax}}\cfrac{P(a_1,a_2,..,a_n|v_j)P(v_j)}{P
 
 Now we need to estimate the two terms above. It is easy to estimate each
 of the \(P(v_j)\) simply by counting the frequency with which each
-target value \(v_j\) occurs in the training data. \underline{However,
-estimating the different \(P(a_1,a_2,...,a_n|v_j)\) terms in this
-fashion is not feasible unless we have a very very large set of training
-data.}
+target value \(v_j\) occurs in the training data. \ul{However, estimating the different} \(P(a_1,a_2,...,a_n|v_j)\) \ul{terms in this fashion is not feasible unless we have a very very large set of training data.}
 
 The naive Bayes classifier is based on the simplifying
-\textbf{assumption} that \underline{the attribute values are conditionally
+\textbf{assumption} that \ul{the attribute values are conditionally
 independent given the target value}:
 
 \[P(a_1,a_2,...,a_n|v_j)=\prod_i P(a_i|v_j)\]
